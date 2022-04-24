@@ -25,7 +25,7 @@ exports.GetHand = class extends React.Component {
         <button
           disabled={!playable}
           onClick={() => parent.playHand('SCISSORS')}
-        >Player 3</button>
+        >Play</button>
       </div>
     );
   }
