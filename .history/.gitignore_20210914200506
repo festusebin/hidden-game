@@ -8,6 +8,8 @@
 /build
 dist/
 
+/client
+
 # misc
 .DS_Store
 .env.local
