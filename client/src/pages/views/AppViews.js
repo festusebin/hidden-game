@@ -8,9 +8,10 @@ exports.Wrapper = class extends React.Component {
     return (
       <div className="App">
         <header className="App-header" id="root">
-          <h1>Hidden Traitor</h1>
+          <h5>Tim's Thieves Decentralized Voting Algorithm</h5>
           {content}
         </header>
+          <a className = "link" href = "https://daochat.loca.lt">Go to your organization's private chat!</a>
       </div>
     );
   }
@@ -20,8 +21,8 @@ exports.ConnectAccount = class extends React.Component {
   render() {
     return (
       <div>
-        Please wait while we connect to your account.
-        If this takes more than a few seconds, there may be something wrong.
+        Connecting to your account....
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
       </div>
     )
   }
@@ -33,44 +34,44 @@ exports.FundAccount = class extends React.Component {
     const amt = (this.state || {}).amt || defaultFundAmt;
     return (
       <div>
-        <h2>Fund account</h2>
+        <h4>Add some Funds to your account</h4>
         <br />
-        Balance: {bal} {standardUnit}
+        Current Balance For Staking: {bal} {standardUnit}
         <hr />
-        Would you like to fund your account with additional {standardUnit}?
+      Fund account with additional {standardUnit}?
         <br />
-        (This only works on certain devnets)
+      Does not work with all wallets. Your organization(Hidden Traitor) must have enough ALGO to fund for staking perspectives.
         <br />
         <input
           type='number'
           placeholder={defaultFundAmt}
           onChange={(e) => this.setState({amt: e.currentTarget.value})}
         />
-        <button onClick={() => parent.fundAccount(amt)}>Fund Account</button>
-        <button onClick={() => parent.skipFundAccount()}>Skip</button>
+        <button onClick={() => parent.fundAccount(amt)}>Add ALGO(will cost gas)</button>
+        <button onClick={() => parent.skipFundAccount()}>Go straight to voting</button>
       </div>
     );
   }
 }
 
-exports.DeployerOrAttacher = class extends React.Component {
+exports.ValidatorOrMember = class extends React.Component {
   render() {
     const {parent} = this.props;
     return (
       <div>
-        Please select a role:
+        Please select your organizational role(will be communicated through your organization)
         <br />
         <p>
           <button
-            onClick={() => parent.selectDeployer()}
-          >Deployer</button>
-          <br /> Set the wager, deploy the contract.
+            onClick={() => parent.selectMember()}
+          >Member</button>
+          <br />Regular Member within the organization. Has the ability to vote on propositions.
         </p>
         <p>
           <button
-            onClick={() => parent.selectAttacher()}
-          >Attacher</button>
-          <br /> Attach to the Deployer's contract.
+            onClick={() => parent.selectValidator()}
+          >Validator</button>
+          <br />Will ensure voter exists within the organization and then also paticipate in the voting process.
         </p>
       </div>
     );

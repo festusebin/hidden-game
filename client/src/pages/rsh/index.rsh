@@ -1,100 +1,72 @@
 'reach 0.1';
 
-const [ isHand, ROCK, PAPER, SCISSORS ] = makeEnum(3);
-const [ isOutcome, B_WINS, DRAW, A_WINS ] = makeEnum(3);
+const [ isVote, NO, YES] = makeEnum(2);
+const [ finalResult, FAIL, DRAW, SUCCESS ] = makeEnum(3);
 
-const winner = (handAlice, handBob) =>
-  ((handAlice + (4 - handBob)) % 3);
+const consensus = (voteA, voteB) =>
+      voteA + voteB;
 
-assert(winner(ROCK, PAPER) == B_WINS);
-assert(winner(PAPER, ROCK) == A_WINS);
-assert(winner(ROCK, ROCK) == DRAW);
+assert(consensus(NO, YES) ==  DRAW);
+assert(consensus(YES, YES) == SUCCESS);
+assert(consensus(NO, NO) == FAIL);
 
-forall(UInt, handAlice =>
-  forall(UInt, handBob =>
-    assert(isOutcome(winner(handAlice, handBob)))));
+const Voter =
+      { ...hasRandom,
+        getVote: Fun([], UInt),
+        seeResult: Fun([UInt], Null),
+        informTimeout: Fun([], Null) };
+const Alice =
+      { ...Voter,
+        stake: UInt };
+const Bob =
+      { ...Voter,
+        acceptStake: Fun([UInt], Null) };
 
-forall(UInt, (hand) =>
-  assert(winner(hand, hand) == DRAW));
+const DEADLINE = 30;
 
-const Player = {
-  ...hasRandom,
-  getHand: Fun([], UInt),
-  seeOutcome: Fun([UInt], Null),
-  informTimeout: Fun([], Null),
-};
-
-export const main = Reach.App(() => {
-  const Alice = Participant('Alice', {
-    ...Player,
-    wager: UInt, // atomic units of currency
-    deadline: UInt, // time delta (blocks/rounds)
-  });
-  const Bob   = Participant('Bob', {
-    ...Player,
-    acceptWager: Fun([UInt], Null),
-  });
-  init();
-
-  const informTimeout = () => {
-    each([Alice, Bob], () => {
-      interact.informTimeout();
-    });
-  };
-
-  Alice.only(() => {
-    const wager = declassify(interact.wager);
-    const deadline = declassify(interact.deadline);
-  });
-  Alice.publish(wager, deadline)
-    .pay(wager);
-  commit();
-
-  Bob.only(() => {
-    interact.acceptWager(wager);
-  });
-  Bob.pay(wager)
-    .timeout(relativeTime(deadline), () => closeTo(Alice, informTimeout));
-
-  var outcome = DRAW;
-  invariant( balance() == 2 * wager && isOutcome(outcome) );
-  while ( outcome == DRAW ) {
-    commit();
-
-    Alice.only(() => {
-      const _handAlice = interact.getHand();
-      const [_commitAlice, _saltAlice] = makeCommitment(interact, _handAlice);
-      const commitAlice = declassify(_commitAlice);
-    });
-    Alice.publish(commitAlice)
-      .timeout(relativeTime(deadline), () => closeTo(Bob, informTimeout));
-    commit();
-
-    unknowable(Bob, Alice(_handAlice, _saltAlice));
-    Bob.only(() => {
-      const handBob = declassify(interact.getHand());
-    });
-    Bob.publish(handBob)
-      .timeout(relativeTime(deadline), () => closeTo(Alice, informTimeout));
-    commit();
-
-    Alice.only(() => {
-      const saltAlice = declassify(_saltAlice);
-      const handAlice = declassify(_handAlice);
-    });
-    Alice.publish(saltAlice, handAlice)
-      .timeout(relativeTime(deadline), () => closeTo(Bob, informTimeout));
-    checkCommitment(commitAlice, saltAlice, handAlice);
-
-    outcome = winner(handAlice, handBob);
-    continue;
-  }
-
-  assert(outcome == A_WINS || outcome == B_WINS);
-  transfer(2 * wager).to(outcome == A_WINS ? Alice : Bob);
-  commit();
-
-  each([Alice, Bob], () => {
-    interact.seeOutcome(outcome);
-  });
-});
+export const main =
+  Reach.App(
+    {},
+    [Participant('Alice', Alice), Participant('Bob', Bob)],
+    (A, B) => {
+      const informTimeout = () => {
+        each([A, B], () => {
+          interact.informTimeout(); }); };
+      A.only(() => {
+        const stake = declassify(interact.stake); });
+      A.publish(stake)
+        .pay(stake);
+      commit();
+      B.only(() => {
+        interact.acceptStake(stake); });
+      B.pay(stake)
+        .timeout(relativeTime(DEADLINE), () => closeTo(A, informTimeout));
+      var result = DRAW;
+      invariant(balance() == 2 * stake);
+      while ( result == DRAW ) {
+        commit();
+        A.only(() => {
+          const _voteA = interact.getVote();
+          const [_decisionA, _saltA] = makeCommitment(interact, _voteA);
+          const decisionA = declassify(_decisionA); });
+        A.publish(decisionA)
+          .timeout(relativeTime(DEADLINE), () => closeTo(B, informTimeout));
+        commit();
+        unknowable(B, A(_voteA, _saltA));
+        B.only(() => {
+          const voteB = declassify(interact.getVote()); });
+        B.publish(voteB)
+          .timeout(relativeTime(DEADLINE), () => closeTo(A, informTimeout));
+        commit();
+        A.only(() => {
+          const [saltA, voteA] = declassify([_saltA, _voteA]); });
+        A.publish(saltA, voteA)
+          .timeout(relativeTime(DEADLINE), () => closeTo(B, informTimeout));
+        checkCommitment(decisionA, saltA, voteA);
+        result = consensus(voteA, voteB);
+        continue; }
+      transfer(2 * stake).to(result == SUCCESS ? A : B);
+      commit();
+      each([A, B], () => {
+        interact.seeResult(result); });
+      exit(); });

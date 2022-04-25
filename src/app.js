@@ -12,7 +12,7 @@ import {
 
 dotenv.config();
 
-const { PORT: port = 4000 } = process.env;
+const { PORT: port = 4009 } = process.env;
 
 const app = express();
 
