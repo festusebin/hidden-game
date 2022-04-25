@@ -41,7 +41,7 @@ exports.FundAccount = class extends React.Component {
       Fund account with additional {standardUnit}?
         <br />
         <br />
-      To vote, you must have enough ALGO to fund for staking perspectives.
+      Vote who the Traitor is by staking some ALGO
         <br />
         <br />
         <div>
@@ -66,19 +66,19 @@ exports.ValidatorOrMember = class extends React.Component {
     const {parent} = this.props;
     return (
       <div>
-        Please select your organizational role(will be communicated through your organization)
+        Please select Deployer if you are the creator
         <br />
         <p>
           <button
-            onClick={() => parent.selectMember()}
-          >Member</button>
-          <br />Regular Member within the organization. Has the ability to vote on propositions.
+            onClick={() => parent.selectValidator()}
+          >Deployer</button>
+          <br />Please select Voter if you are attacker
         </p>
         <p>
           <button
-            onClick={() => parent.selectValidator()}
-          >Validator</button>
-          <br />Will ensure voter exists within the organization and then also paticipate in the voting process.
+            onClick={() => parent.selectMember()}
+          >Voter</button>
+          <br />Voting is done in consensus
         </p>
       </div>
     );
