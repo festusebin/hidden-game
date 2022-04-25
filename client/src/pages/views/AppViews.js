@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+const router = Router();
 const exports = {};
 const router = Router();
 
