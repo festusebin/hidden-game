@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Index } from '../Index';
 
 const exports = {};
 
@@ -21,7 +21,7 @@ exports.ConnectAccount = class extends React.Component {
   render() {
     return (
       <div>
-        Connecting to your account....
+        Please wait connecting to your account....
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
       </div>
     )
@@ -30,7 +30,7 @@ exports.ConnectAccount = class extends React.Component {
 
 exports.FundAccount = class extends React.Component {
   render() {
-    const {acc, bal, standardUnit, defaultFundAmt, parent} = this.props;
+    const {bal, standardUnit, defaultFundAmt, parent} = this.props;
     const amt = (this.state || {}).amt || defaultFundAmt;
     return (
       <div>
@@ -40,24 +40,29 @@ exports.FundAccount = class extends React.Component {
         <hr />
       Fund account with additional {standardUnit}?
         <br />
+      Does not work with all wallets. Your organization(Hidden Traitor) must have enough ALGO to fund for staking perspectives.
         <br />
-      To vote, you must have enough ALGO to fund for staking perspectives.
-        <br />
-        <br />
-        <div>
         <input
           type='number'
           placeholder={defaultFundAmt}
           onChange={(e) => this.setState({amt: e.currentTarget.value})}
         />
-        <button onClick={() => parent.fundAccount(amt)}>Fund wallet</button>
-        </div>
+        <button onClick={() => parent.fundAccount(amt)}>Add ALGO(will cost gas)</button>
         <button onClick={() => parent.skipFundAccount()}>Go to voting</button>
-        <Link to='/home'>
-        <button>Go to game</button>
-        </Link>
+        <button onClick={() => Index()}>Go to game</button>
       </div>
     );
+  }
+}
+
+exports.Player = class extends React.Component {
+  render() {
+    const { parent } = this.props;
+    return (
+      <div>
+
+      </div>
+    )
   }
 }
 
@@ -66,19 +71,27 @@ exports.ValidatorOrMember = class extends React.Component {
     const {parent} = this.props;
     return (
       <div>
-        Please select your organizational role(will be communicated through your organization)
+        Please select a role
         <br />
         <p>
           <button
             onClick={() => parent.selectMember()}
-          >Member</button>
-          <br />Regular Member within the organization. Has the ability to vote on propositions.
+          >Attacher</button>
+          <br />
+          Attach to the Deployer's contract.
+          /**
+          ** Regular Member within the organization. Has the ability to vote on propositions. 
+          **/
         </p>
         <p>
           <button
             onClick={() => parent.selectValidator()}
-          >Validator</button>
-          <br />Will ensure voter exists within the organization and then also paticipate in the voting process.
+          >Deployer</button>
+          <br />
+          Set the wager, deploy the contract.
+          /**
+          ** Will ensure voter exists within the organization and then also paticipate in the voting process.
+          **/
         </p>
       </div>
     );
