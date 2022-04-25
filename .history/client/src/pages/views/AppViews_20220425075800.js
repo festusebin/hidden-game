@@ -72,20 +72,13 @@ exports.ValidatorOrMember = class extends React.Component {
             onClick={() => parent.selectMember()}
           >Attacher</button>
           <br />
-          Attach to the Deployer's contract.
-          /**
-          ** Regular Member within the organization. Has the ability to vote on propositions. 
-          **/
+          /*Regular Member within the organization. Has the ability to vote on propositions.
         </p>
         <p>
           <button
             onClick={() => parent.selectValidator()}
           >Deployer</button>
-          <br />
-          Set the wager, deploy the contract.
-          /**
-          ** Will ensure voter exists within the organization and then also paticipate in the voting process.
-          **/
+          <br />Will ensure voter exists within the organization and then also paticipate in the voting process.
         </p>
       </div>
     );

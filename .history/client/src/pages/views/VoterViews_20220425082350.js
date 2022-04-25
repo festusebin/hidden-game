@@ -35,7 +35,7 @@ exports.WaitingForResults = class extends React.Component {
   render() {
     return (
       <div>
-        Compiling Results...
+        Compiling Results....
       </div>
     );
   }
@@ -52,9 +52,10 @@ exports.Done = class extends React.Component {
         Using Quantum-Voting Results:
         <br />{result || 'Unknown'}
         <br />
-          /**
-            ** If you want a NFT showing that you voted on an amendment that reached consensus within the orginization, please click this. Also contact your validator so that they can ensure a proper transfer.
-          **/
+        If you want a NFT showing that you voted on an amendment that reached consensus within the orginization, please click <a href = "https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/79983065427226972445399853513819781293454144403263322433738740729646178893825">this</a>
+        <br />
+        Also contact your validator so that they can ensure a proper transfer.
+
         </div>
 
       );
@@ -64,10 +65,9 @@ exports.Done = class extends React.Component {
           The result was:
           <br />{result || 'Unknown'}
           <br />
-        /**
-        ** If you want a NFT showing that you voted in process reaching majority vote, please click. Also contact your validator so that they can ensure a proper transfer.
-         */
-          
+          If you want a NFT showing that you voted in process reaching majority vote, please click <a href = "https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/79983065427226972445399853513819781293454144403263322433738740729646178893825">this</a>
+          <br />
+          Also contact your validator so that they can ensure a proper transfer.
         </div>
       );}
   }

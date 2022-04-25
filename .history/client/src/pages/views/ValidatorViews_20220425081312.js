@@ -55,7 +55,7 @@ exports.Validator = class extends React.Component {
 exports.Validating = class extends React.Component {
   render() {
     return (
-      <div>Deploying... please wait.</div>
+      <div>Compiling...please wait</div>
     );
   }
 }
@@ -76,8 +76,8 @@ exports.WaitingForMember = class extends React.Component {
     const {ctcInfoStr} = this.props;
     return (
       <div>
-        Your assigned attacher (voter) is joining....
-        <br /> Send them this smart contract info:
+        Your assigned voter is joining....
+        <br /> Send them this smart contract info through the chat
         <pre className='ContractInfo'>
           {ctcInfoStr}
         </pre>

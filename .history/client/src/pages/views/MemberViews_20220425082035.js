@@ -63,7 +63,7 @@ exports.AcceptStake = class extends React.Component {
             this.setState({disabled: true});
             parent.termsAccepted();
           }}
-        >Accept terms and Stake!</button>
+        >Pay Ticket Price and Stake!</button>
       </div>
     );
   }
@@ -73,7 +73,7 @@ exports.WaitingForTurn = class extends React.Component {
   render() {
     return (
       <div>
-        Waiting for other player...
+        Waiting.....
         <br />
         /**
         ** Open the chat in the new tab to discuss more!

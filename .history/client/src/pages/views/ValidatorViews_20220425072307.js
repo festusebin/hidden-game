@@ -9,8 +9,8 @@ exports.Wrapper = class extends React.Component {
   render() {
     const {content} = this.props;
     return (
-      <div className="Deployer">
-        <h2>Deployer (Alice)</h2>
+      <div className="header">
+        <h4>Validator</h4>
         {content}
       </div>
     );
@@ -46,7 +46,7 @@ exports.Validator = class extends React.Component {
         <br />
         <button
           onClick={() => parent.validate()}
-        >Deploy</button>
+        >Make Contract</button>
       </div>
     );
   }
@@ -55,7 +55,7 @@ exports.Validator = class extends React.Component {
 exports.Validating = class extends React.Component {
   render() {
     return (
-      <div>Deploying... please wait.</div>
+      <div>Compiling...please wait</div>
     );
   }
 }
@@ -76,8 +76,8 @@ exports.WaitingForMember = class extends React.Component {
     const {ctcInfoStr} = this.props;
     return (
       <div>
-        Your assigned attacher (voter) is joining....
-        <br /> Send them this smart contract info:
+        Your assigned voter is joining....
+        <br /> Send them this smart contract info through the chat
         <pre className='ContractInfo'>
           {ctcInfoStr}
         </pre>

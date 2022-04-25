@@ -7,7 +7,7 @@ exports.Wrapper = class extends React.Component {
   render() {
     const {content} = this.props;
     return (
-      <div className="Attacher">
+      <div className="Member">
         <h2>Attacher (Bob)</h2>
         {content}
       </div>
@@ -32,7 +32,7 @@ exports.Secure = class extends React.Component {
         <button
           disabled={!ctcInfoStr}
           onClick={() => parent.attach(ctcInfoStr)}
-        >Attach</button>
+        >Validate</button>
       </div>
     );
   }
@@ -42,7 +42,7 @@ exports.Securing = class extends React.Component {
   render() {
     return (
       <div>
-        Attaching, please wait...
+        Validating....please wait....
       </div>
     );
   }
@@ -54,7 +54,7 @@ exports.AcceptStake = class extends React.Component {
     const {disabled} = this.state || {};
     return (
       <div>
-        The terms of the game are:
+        The stake and ticket price as dictated by the deployer are....
         <br /> stake: {stake} {standardUnit}
         <br />
         <button
@@ -63,7 +63,7 @@ exports.AcceptStake = class extends React.Component {
             this.setState({disabled: true});
             parent.termsAccepted();
           }}
-        >Accept terms and Stake!</button>
+        >Pay Ticket Price and Stake!</button>
       </div>
     );
   }
@@ -73,7 +73,7 @@ exports.WaitingForTurn = class extends React.Component {
   render() {
     return (
       <div>
-        Waiting for other player...
+        Waiting.....
         <br />
         /**
         ** Open the chat in the new tab to discuss more!

@@ -76,8 +76,8 @@ exports.WaitingForMember = class extends React.Component {
     const {ctcInfoStr} = this.props;
     return (
       <div>
-        Your assigned attacher (voter) is joining....
-        <br /> Send them this smart contract info:
+        Your assigned voter is joining....
+        <br /> Send them this smart contract info through the chat
         <pre className='ContractInfo'>
           {ctcInfoStr}
         </pre>
