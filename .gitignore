@@ -23,3 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+yarn.lock
+.history/
+.vscode/
+package-lock.json
+yarn.lock
