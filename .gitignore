@@ -9,7 +9,7 @@
 dist/
 
 # history
-./history
+.history/
 
 # misc
 .DS_Store
