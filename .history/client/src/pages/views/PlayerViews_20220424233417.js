@@ -17,15 +17,15 @@ exports.GetHand = class extends React.Component {
         <button
           disabled={!playable}
           onClick={() => parent.playHand('ROCK')}
-        >Player 1</button>
+        >Rock</button>
         <button
           disabled={!playable}
           onClick={() => parent.playHand('PAPER')}
-        >Player 2</button>
+        >Paper</button>
         <button
           disabled={!playable}
           onClick={() => parent.playHand('SCISSORS')}
-        >Player 3</button>
+        >Scissors</button>
       </div>
     );
   }

@@ -7,7 +7,7 @@ import agent003 from '../../images/agent003.svg';
 //import agent006 from '../../images/agent006.svg';
 
 export function Player({ player, color = "#fbfbfb", agent = 0 ,vertical = false }) {
-    if (agent > 3) agent = 0;
+    if (agent > 5) agent = 0;
     const agents = [agent001, agent002, agent003];
     return player ? (
         <div className={vertical ? s.playerLobby : s.player} >
