@@ -1,5 +1,4 @@
 import React from 'react';
-import { Index } from '../Index';
 
 const exports = {};
 
@@ -8,15 +7,11 @@ exports.Wrapper = class extends React.Component {
     const {content} = this.props;
     return (
       <div className="App">
-        {/*<header className="App-header" id="root">
+        <header className="App-header" id="root">
           <h5>Tim's Thieves Decentralized Voting Algorithm</h5>
           {content}
         </header>
-          <a className = "link" href = "https://daochat.loca.lt">Go to your organization's private chat!</a>*/}
-        <header className="App-header" id="root">
-          <h1>Hidden Traitor</h1>
-          {content}
-        </header>
+          <!--<a className = "link" href = "https://daochat.loca.lt">Go to your organization's private chat!</a>-->
       </div>
     );
   }
@@ -26,7 +21,7 @@ exports.ConnectAccount = class extends React.Component {
   render() {
     return (
       <div>
-        Please wait connecting to your account....
+        Connecting to your account....
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
       </div>
     )
@@ -54,7 +49,6 @@ exports.FundAccount = class extends React.Component {
         />
         <button onClick={() => parent.fundAccount(amt)}>Add ALGO(will cost gas)</button>
         <button onClick={() => parent.skipFundAccount()}>Go straight to voting</button>
-        <button onClick={() => Index()}>Go to game</button>
       </div>
     );
   }

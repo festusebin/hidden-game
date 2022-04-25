@@ -1,5 +1,4 @@
 import React from 'react';
-import { Index } from '../Index';
 
 const exports = {};
 
@@ -26,7 +25,7 @@ exports.ConnectAccount = class extends React.Component {
   render() {
     return (
       <div>
-        Please wait connecting to your account....
+        Please onnecting to your account....
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
       </div>
     )
@@ -54,7 +53,6 @@ exports.FundAccount = class extends React.Component {
         />
         <button onClick={() => parent.fundAccount(amt)}>Add ALGO(will cost gas)</button>
         <button onClick={() => parent.skipFundAccount()}>Go straight to voting</button>
-        <button onClick={() => Index()}>Go to game</button>
       </div>
     );
   }

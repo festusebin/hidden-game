@@ -50,9 +50,7 @@ export class Vote extends React.Component {
   selectMember() { this.setState({view: 'Wrapper', ContentView: Member}); }
   selectValidator() { this.setState({view: 'Wrapper', ContentView:Validator}); }
   render() { return renderView(this, AppViews); }
-  /*async Game() {
-    this.setState({ view: 'Player' });
-  }*/
+  async
 }
 
 class Voter extends React.Component {
