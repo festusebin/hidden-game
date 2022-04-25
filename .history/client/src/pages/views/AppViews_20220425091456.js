@@ -55,7 +55,7 @@ exports.FundAccount = class extends React.Component {
         />
         <button onClick={() => parent.fundAccount(amt)}>Add ALGO(will cost gas)</button>
         <button onClick={() => parent.skipFundAccount()}>Go to voting</button>
-        <button onClick={() => router.push(`/home`)}>Go to game</button>
+        <button onClick={() => router}>Go to game</button>
       </div>
     );
   }

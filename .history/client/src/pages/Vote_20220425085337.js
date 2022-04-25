@@ -46,10 +46,10 @@ export class Vote extends React.Component {
     await reach.transfer(this.state.faucet, this.state.acc, reach.parseCurrency(fundAmount));
     this.setState({view: 'ValidatorOrMember'});
   }
-  async skipFundAccount() { this.setState({view: 'ValidatorOrMember'}); }
   async Game() {
     this.setState({ view: 'Player' });
   }
+  async skipFundAccount() { this.setState({view: 'ValidatorOrMember'}); }
   selectMember() { this.setState({view: 'Wrapper', ContentView: Member}); }
   selectValidator() { this.setState({view: 'Wrapper', ContentView:Validator}); }
   render() { return renderView(this, AppViews); }

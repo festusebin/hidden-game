@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const exports = {};
-const router = Router();
 
 exports.Wrapper = class extends React.Component {
   render() {
@@ -55,7 +54,7 @@ exports.FundAccount = class extends React.Component {
         />
         <button onClick={() => parent.fundAccount(amt)}>Add ALGO(will cost gas)</button>
         <button onClick={() => parent.skipFundAccount()}>Go to voting</button>
-        <button onClick={() => router.push(`/home`)}>Go to game</button>
+        <button onClick={() => Index()}>Go to game</button>
       </div>
     );
   }

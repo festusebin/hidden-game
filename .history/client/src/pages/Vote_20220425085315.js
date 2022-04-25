@@ -47,12 +47,12 @@ export class Vote extends React.Component {
     this.setState({view: 'ValidatorOrMember'});
   }
   async skipFundAccount() { this.setState({view: 'ValidatorOrMember'}); }
-  async Game() {
-    this.setState({ view: 'Player' });
-  }
   selectMember() { this.setState({view: 'Wrapper', ContentView: Member}); }
   selectValidator() { this.setState({view: 'Wrapper', ContentView:Validator}); }
   render() { return renderView(this, AppViews); }
+  /*async Game() {
+    this.setState({ view: 'Player' });
+  }
 }
 
 class Voter extends React.Component {
