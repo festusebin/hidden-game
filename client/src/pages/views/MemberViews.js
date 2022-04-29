@@ -68,6 +68,21 @@ exports.AcceptStake = class extends React.Component {
     );
   }
 }
+// Adding another waiting for member here for charlie to join voting contract
+
+/* exports.WaitingForMember = class extends React.Component {
+  async copyToClipborad(button) {
+    const {ctcInfoStr} = this.props;
+    navigator.clipboard.writeText(ctcInfoStr);
+    const origInnerHTML = button.innerHTML;
+    button.innerHTML = 'Copied!';
+    button.disabled = true;
+    //await sleep(1000);
+    button.innerHTML = origInnerHTML;
+    button.disabled = false;
+  }
+}
+ */
 
 exports.WaitingForTurn = class extends React.Component {
   render() {
@@ -75,9 +90,9 @@ exports.WaitingForTurn = class extends React.Component {
       <div>
         Waiting for other player...
         <br />
-        /**
+        {/**
         ** Open the chat in the new tab to discuss more!
-        **/
+    **/}
       </div>
     );
   }
