@@ -30,7 +30,7 @@ exports.ConnectAccount = class extends React.Component {
 
 exports.FundAccount = class extends React.Component {
   render() {
-    const {acc, bal, standardUnit, defaultFundAmt, parent} = this.props;
+    const {bal, standardUnit, defaultFundAmt, parent} = this.props;
     const amt = (this.state || {}).amt || defaultFundAmt;
     return (
       <div>
@@ -77,7 +77,13 @@ exports.ValidatorOrMember = class extends React.Component {
         <p>
           <button
             onClick={() => parent.selectMember()}
-          >Voter</button>
+          >1st Voter</button>
+          <br />Voting is done in consensus
+        </p>
+        <p>
+          <button
+            onClick={() => parent.selectMember2()}
+          >2nd Voter</button>
           <br />Voting is done in consensus
         </p>
       </div>
