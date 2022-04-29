@@ -28,3 +28,12 @@ and server [http://localhost:4009]
 ### `REACH_CONNECTOR_MODE=ALGO ./reach devnet`
 Run the consensus test network on ALGORAND
 
+
+### Demo Website
+Please check [https://reach-p2.vercel.app]
+
+### REFERENCE
+1. Credit to Hidden Role Game in web2 [https://github.com/DoddiSkula/hidden-traitor-backend]
+2. RPS tutorial reach [https://github.com/reach-sh/reach-lang/tree/master/examples/rps-9-web]
+3. Voting contract reach [https://github.com/Bhaney44/Reach/tree/main/Reach_Voting_Tutorial]
+
