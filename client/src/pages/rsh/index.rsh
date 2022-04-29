@@ -1,14 +1,16 @@
 'reach 0.1';
 
-const [ isVote, NO, YES] = makeEnum(2);
+const [ isVote, ALICE, BOB, CHARLIE] = makeEnum(3);
 const [ finalResult, FAIL, DRAW, SUCCESS ] = makeEnum(3);
 
-const consensus = (voteA, voteB) =>
-      voteA + voteB;
+const consensus = (voteA, voteB, voteC) =>
+      voteA + voteB + voteC;
+      
+/* assert(consensus(ALICE, BOB) == FAIL);
+assert(consensus(BOB, CHARLIE) == SUCCESS);
+assert(consensus(ALICE, ALICE) == DRAW); */
 
-assert(consensus(NO, YES) ==  DRAW);
-assert(consensus(YES, YES) == SUCCESS);
-assert(consensus(NO, NO) == FAIL);
+
 
 const Voter =
       { ...hasRandom,
@@ -21,16 +23,19 @@ const Alice =
 const Bob =
       { ...Voter,
         acceptStake: Fun([UInt], Null) };
+const Cha =
+      { ...Voter,
+        acceptStake: Fun([UInt], Null) };
 
-const DEADLINE = 30;
+const DEADLINE = 3000;
 
 export const main =
   Reach.App(
     {},
-    [Participant('Alice', Alice), Participant('Bob', Bob)],
-    (A, B) => {
+    [Participant('Alice', Alice), Participant('Bob', Bob), Participant('Cha', Cha)],
+    (A, B, C) => {
       const informTimeout = () => {
-        each([A, B], () => {
+        each([A, B, C], () => {
           interact.informTimeout(); }); };
       A.only(() => {
         const stake = declassify(interact.stake); });
@@ -41,8 +46,13 @@ export const main =
         interact.acceptStake(stake); });
       B.pay(stake)
         .timeout(relativeTime(DEADLINE), () => closeTo(A, informTimeout));
+      commit();
+      C.only(() => {
+        interact.acceptStake(stake); });
+      C.pay(stake)
+        .timeout(relativeTime(DEADLINE), () => closeTo(A, informTimeout));
       var result = DRAW;
-      invariant(balance() == 2 * stake);
+      invariant(balance() == 3 * stake);
       while ( result == DRAW ) {
         commit();
         A.only(() => {
@@ -58,15 +68,20 @@ export const main =
         B.publish(voteB)
           .timeout(relativeTime(DEADLINE), () => closeTo(A, informTimeout));
         commit();
+        C.only(() => {
+          const voteC = declassify(interact.getVote()); });
+        C.publish(voteC)
+          .timeout(relativeTime(DEADLINE), () => closeTo(A, informTimeout));
+        commit();
         A.only(() => {
           const [saltA, voteA] = declassify([_saltA, _voteA]); });
         A.publish(saltA, voteA)
           .timeout(relativeTime(DEADLINE), () => closeTo(B, informTimeout));
         checkCommitment(decisionA, saltA, voteA);
-        result = consensus(voteA, voteB);
+        result = consensus(voteA, voteB, voteC);
         continue; }
-      transfer(2 * stake).to(result == SUCCESS ? A : B);
+      transfer(3 * stake).to(result == SUCCESS ? A : B);
       commit();
-      each([A, B], () => {
+      each([A, B, C], () => {
         interact.seeResult(result); });
       exit(); });
