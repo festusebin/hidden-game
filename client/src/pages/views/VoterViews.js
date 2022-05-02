@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '../../components/Button/Button';
 
 const exports = {};
 
@@ -13,9 +15,13 @@ exports.GetVote = class extends React.Component {
     const main = quantumresults[result];
     return (
       <div>
-          {vote ? 'No Consensus reached! Our Quantum Computer will make a decison......Our Quantum Computer has determined that the result should be: '+main+'. You may vote again if you want to have more than 50% consensus.' :  ''}
+          {vote ? 'No Consensus reached! Our Quantum Computer will make a decison.....Our Quantum Computer has determined that the result should be: '+main+'. You may vote again if you want to have more than 50% consensus.' :  ''}
         <br />
-        {!workable ? 'Please wait...' : ''}
+        {!workable ? 'Please wait...' : (
+          <Link to='../Index.jsx'>
+            <Button>Game</Button>
+          </Link>
+        )}
         <br />
 
         <button
@@ -52,9 +58,9 @@ exports.Done = class extends React.Component {
         Using Quantum-Voting Results:
         <br />{result || 'Unknown'}
         <br />
-          /**
+          {/**
             ** If you want a NFT showing that you voted on an amendment that reached consensus within the orginization, please click this. Also contact your validator so that they can ensure a proper transfer.
-          **/
+          **/}
         </div>
 
       );
@@ -64,9 +70,9 @@ exports.Done = class extends React.Component {
           The result was:
           <br />{result || 'Unknown'}
           <br />
-        /**
+        {/**
         ** If you want a NFT showing that you voted in process reaching majority vote, please click. Also contact your validator so that they can ensure a proper transfer.
-         */
+         */}
           
         </div>
       );}

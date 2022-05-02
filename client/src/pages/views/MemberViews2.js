@@ -63,7 +63,7 @@ exports.AcceptStake = class extends React.Component {
             this.setState({disabled: true});
             parent.termsAccepted();
           }}
-        >Accept terms and Stake!</button>
+        >Accept Terms</button>
       </div>
     );
   }

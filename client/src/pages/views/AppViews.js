@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+
 
 const exports = {};
 
@@ -32,6 +33,10 @@ exports.FundAccount = class extends React.Component {
   render() {
     const {bal, standardUnit, defaultFundAmt, parent} = this.props;
     const amt = (this.state || {}).amt || defaultFundAmt;
+
+    const Home = () => {
+      window.location = "/home"
+    }
     return (
       <div>
         <h4>Add some Funds to your account</h4>
@@ -53,9 +58,7 @@ exports.FundAccount = class extends React.Component {
         <button onClick={() => parent.fundAccount(amt)}>Fund wallet</button>
         </div>
         <button onClick={() => parent.skipFundAccount()}>Go to voting</button>
-        <Link to='/home'>
-        <button>Go to game</button>
-        </Link>
+        <button onClick={Home}>Go to game</button>
       </div>
     );
   }

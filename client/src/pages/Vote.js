@@ -2,10 +2,11 @@ import React from 'react';
 import AppViews from './views/AppViews';
 import ValidatorViews from './views/ValidatorViews';
 import MemberViews from './views/MemberViews';
+import MemberViews2 from './views/MemberViews2';
 // import {renderDOM, renderView} from './views/render';
-import {renderDOM, renderView} from './views/render';
+import {renderView} from './views/render';
 import './Vote.css';
-import * as backend from './rsh/build/index.main.mjs';
+import * as backend from './rsh/build/vote-tutorial.main.mjs';
 import { loadStdlib } from '@reach-sh/stdlib';
 // import Algo connector
 import { ALGO_MyAlgoConnect as MyAlgoConnect } from '@reach-sh/stdlib';
@@ -17,8 +18,8 @@ const reach = loadStdlib('ALGO');
 reach.setWalletFallback(reach.walletFallback({providerEnv: 'TestNet', MyAlgoConnect }));
 // const reach = loadStdlib(process.env);
 
-const handToInt = {'ROCK': 0, 'PAPER': 1, 'SCISSORS': 2};
-const intToOutcome = ['Bob wins!', 'Draw!', 'Alice wins!'];
+//const handToInt = {'ROCK': 0, 'PAPER': 1, 'SCISSORS': 2};
+//const intToOutcome = ['Bob wins!', 'Draw!', 'Alice wins!'];
 const {standardUnit} = reach;
 const defaults = {defaultFundAmt: '10', defaultWager: '3', standardUnit};
 
@@ -50,7 +51,8 @@ export class Vote extends React.Component {
   async Game() {
     this.setState({ view: 'Player' });
   }
-  selectMember() { this.setState({view: 'Wrapper', ContentView: Member}); }
+  selectMember() { this.setState({ view: 'Wrapper', ContentView: Member }); }
+  selectMember2() { this.setState({view: 'Wrapper', ContentView: Member2}); }
   selectValidator() { this.setState({view: 'Wrapper', ContentView:Validator}); }
   render() { return renderView(this, AppViews); }
 }
@@ -107,6 +109,29 @@ class Member extends Voter {
     this.setState({view: 'WaitingForTurn'});
   }
   render() { return renderView(this, MemberViews); }
+}
+
+class Member2 extends Voter {
+  constructor(props) {
+    super(props);
+    this.state = {view: 'Secure'};
+  }
+  attach(ctcInfoStr) {
+    const ctc = this.props.acc.attach(backend, JSON.parse(ctcInfoStr));
+    this.setState({view: 'Securing'});
+    backend.Cha(ctc, this);
+  }
+  async acceptStake(stakeAtomic) { 
+    const stake = reach.formatCurrency(stakeAtomic, 4);
+    return await new Promise(resolveAcceptedP => {
+      this.setState({view: 'AcceptStake', stake, resolveAcceptedP});
+    });
+  }
+  termsAccepted() {
+    this.state.resolveAcceptedP();
+    this.setState({view: 'WaitingForTurn'});
+  }
+  render() { return renderView(this, MemberViews2); }
 }
 
 export default Vote;
